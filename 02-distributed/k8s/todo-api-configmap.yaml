@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: todo-api-config
+  labels:
+    app: todo-distributed
+    component: api
+data:
+  NODE_ENV: "production"
+  PORT: "3000"

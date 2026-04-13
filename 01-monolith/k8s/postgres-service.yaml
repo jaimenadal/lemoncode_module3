@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+  labels:
+    app: todo-app
+    component: database
+spec:
+  type: ClusterIP          # accesible solo desde dentro del clúster
+  selector:
+    app: todo-app
+    component: database
+  ports:
+    - name: postgres
+      protocol: TCP
+      port: 5432
+      targetPort: 5432

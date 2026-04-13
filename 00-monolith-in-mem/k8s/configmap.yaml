@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: todo-app-config
+  labels:
+    app: todo-app-mem
+data:
+  NODE_ENV: "production"
+  PORT: "3000"

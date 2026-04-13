@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: todo-app-service
+  labels:
+    app: todo-app
+    component: app
+spec:
+  # LoadBalancer expone el Deployment fuera del clúster.
+  # Obtener la URL de acceso con: minikube service todo-app-service --url
+  type: LoadBalancer
+  selector:
+    app: todo-app
+    component: app
+  ports:
+    - name: http
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

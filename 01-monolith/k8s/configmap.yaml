@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: todo-app-config
+  labels:
+    app: todo-app
+data:
+  # Configuración de la aplicación
+  NODE_ENV: "production"
+  PORT: "3000"
+  # Configuración de la base de datos
+  DB_HOST: "postgres-service"   # nombre del ClusterIP service de postgres
+  DB_USER: "postgres"
+  DB_PASSWORD: "postgres"
+  DB_PORT: "5432"
+  DB_NAME: "todos_db"
+  DB_VERSION: "10.4"

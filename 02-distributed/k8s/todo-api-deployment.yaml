@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-api
+  labels:
+    app: todo-distributed
+    component: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todo-distributed
+      component: api
+  template:
+    metadata:
+      labels:
+        app: todo-distributed
+        component: api
+    spec:
+      containers:
+        - name: todo-api
+          image: lemoncodersbc/lc-todo-api:v5-2024
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: todo-api-config
+          readinessProbe:
+            httpGet:
+              path: /api/
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /api/
+              port: 3000
+            initialDelaySeconds: 20
+            periodSeconds: 10

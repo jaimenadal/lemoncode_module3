@@ -1,0 +1,42 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: todos-db-seed
+  labels:
+    app: todo-app
+    component: database-seed
+spec:
+  # El job se reintenta hasta 5 veces por si postgres aún no está listo
+  backoffLimit: 5
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: psql
+          # Usamos la imagen oficial de postgres como cliente psql
+          image: postgres:16
+          command:
+            - /bin/bash
+            - -c
+            - |
+              echo "Esperando a que postgres esté listo..."
+              until pg_isready -h postgres-service -U postgres; do
+                echo "Postgres no está listo, reintentando en 3s..."
+                sleep 3
+              done
+              echo "Ejecutando script de seed..."
+              psql -h postgres-service -U postgres -f /scripts/todos_db.sql
+              echo "Seed completado"
+          env:
+            - name: PGPASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: todo-app-config
+                  key: DB_PASSWORD
+          volumeMounts:
+            - name: sql-script
+              mountPath: /scripts
+      volumes:
+        - name: sql-script
+          configMap:
+            name: todos-db-sql

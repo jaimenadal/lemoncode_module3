@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-app
+  labels:
+    app: todo-app-mem
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todo-app-mem
+  template:
+    metadata:
+      labels:
+        app: todo-app-mem
+    spec:
+      containers:
+        - name: todo-app
+          # Imagen oficial de Lemoncode — persistencia en memoria (sin BBDD)
+          image: lemoncodersbc/lc-todo-monolith:v5-2024
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: todo-app-config
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 20
+            periodSeconds: 10

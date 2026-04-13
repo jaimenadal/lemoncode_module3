@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: todo-front-service
+  labels:
+    app: todo-distributed
+    component: frontend
+spec:
+  type: ClusterIP    # solo accesible internamente; el Ingress será el punto de entrada
+  selector:
+    app: todo-distributed
+    component: frontend
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
