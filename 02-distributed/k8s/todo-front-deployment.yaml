@@ -19,7 +19,6 @@ spec:
     spec:
       containers:
         - name: todo-front
-          # Nginx sirve la SPA React compilada en el puerto 80
           image: lemoncodersbc/lc-todo-front:v5-2024
           ports:
             - containerPort: 80
