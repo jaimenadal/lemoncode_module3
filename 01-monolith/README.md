@@ -78,7 +78,7 @@ kubectl get pods -l component=app -w
 
 ### Paso 3 — acceder desde fuera del clúster
 
-#### Obtener la URL `minikube service` (recomendado, funciona en todos los entornos)
+#### Obtener la URL `minikube service` 
 
 ```bash
 minikube service todo-app-service --url
