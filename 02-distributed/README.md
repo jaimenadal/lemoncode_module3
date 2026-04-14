@@ -101,6 +101,7 @@ curl http://todo-app.local
 curl http://todo-app.local/api/
 ```
 <img width="1911" height="95" alt="image" src="https://github.com/user-attachments/assets/7f60f48f-fe48-4873-96da-51476e44e162" />
+<img width="1184" height="96" alt="image" src="https://github.com/user-attachments/assets/497fc571-d680-4ab3-b1dd-4e034ec2a969" />
 
 O abrir en el navegador → **http://todo-app.local**
 
