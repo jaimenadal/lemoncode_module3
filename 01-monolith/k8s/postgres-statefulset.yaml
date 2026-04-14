@@ -40,8 +40,7 @@ spec:
                 configMapKeyRef:
                   name: todo-app-config
                   key: DB_NAME
-            # PGDATA apunta a un subdirectorio para evitar conflictos
-            # con ficheros del mountPath que bloquean la inicialización
+
             - name: PGDATA
               value: /var/lib/postgresql/data/pgdata
           volumeMounts:
