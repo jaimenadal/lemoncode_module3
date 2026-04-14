@@ -1,4 +1,4 @@
-# Ejercicio 2 — Monolito con Base de Datos (Kubernetes)
+# Ejercicio 2 — Monolito con BD (utilizando Kubernetes)
 
 ## Descripción
 
