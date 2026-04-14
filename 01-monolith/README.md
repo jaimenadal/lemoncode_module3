@@ -102,10 +102,10 @@ Verificar que las tablas se crearon correctamente:
 
 ```bash
 kubectl exec -it postgres-0 -- psql -U postgres -d todos_db -c "\dt"
-# Debe mostrar: migrations, migrations_lock, todos
 ```
+<img width="1396" height="195" alt="image" src="https://github.com/user-attachments/assets/cbe9df59-e4ab-4aac-8363-3db7052906df" />
 
-### Paso 2 — Aplicación todo-app
+### Paso 2 — aplicación todo-app
 
 ```bash
 kubectl apply -f k8s/todo-app-deployment.yaml
@@ -114,6 +114,7 @@ kubectl apply -f k8s/todo-app-service.yaml
 # Verificar
 kubectl get pods -l component=app -w
 ```
+<img width="1190" height="206" alt="image" src="https://github.com/user-attachments/assets/68b5cb0e-cf7d-46b9-8c96-c582176157e0" />
 
 ### Paso 3 — Acceder desde fuera del clúster
 
