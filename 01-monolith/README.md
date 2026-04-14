@@ -151,22 +151,8 @@ kubectl get all
 ```
 
 Salida esperada:
-```
-NAME                            READY   STATUS    RESTARTS   AGE
-pod/postgres-0                  1/1     Running   0          2m
-pod/todo-app-6d8f9b7c4d-xk2pj   1/1     Running   0          1m
+<img width="1186" height="494" alt="image" src="https://github.com/user-attachments/assets/772194df-e525-4838-b6ab-d67565c378b1" />
 
-NAME                       TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
-service/kubernetes         ClusterIP      10.96.0.1       <none>        443/TCP          10m
-service/postgres-service   ClusterIP      10.96.45.123    <none>        5432/TCP         2m
-service/todo-app-service   LoadBalancer   10.96.78.200    127.0.0.1     3000:31234/TCP   1m
-
-NAME                       READY   AGE
-statefulset.apps/postgres  1/1     2m
-
-NAME                       READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/todo-app   1/1     1            1           1m
-```
 
 ### 2. Verificar PersistentVolume y PersistentVolumeClaim
 
@@ -175,13 +161,8 @@ kubectl get pv,pvc
 ```
 
 Salida esperada:
-```
-NAME                          CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                  STORAGECLASS          AGE
-persistentvolume/postgres-pv  1Gi        RWO            Retain           Bound    default/postgres-pvc   todo-storage-class    2m
+<img width="1674" height="136" alt="image" src="https://github.com/user-attachments/assets/a15c0879-1df7-4068-bacd-0dc7b649f177" />
 
-NAME                                 STATUS   VOLUME        CAPACITY   ACCESS MODES   STORAGECLASS          AGE
-persistentvolumeclaim/postgres-pvc   Bound    postgres-pv   1Gi        RWO            todo-storage-class    2m
-```
 
 > El campo `STATUS` debe ser `Bound` en ambos. Si aparece `Pending`, revisar que el StorageClass y el PV están correctamente creados.
 
