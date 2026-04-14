@@ -7,27 +7,8 @@ Arquitectura de dos servicios independientes orquestados con Kubernetes:
 - **todo-front**: SPA React servida por Nginx (puerto 80)
 - **todo-api**: API REST Express/Node.js (puerto 3000)
 
-El acceso exterior se gestiona mediante un **Ingress NGINX** que enruta el tráfico según la ruta de la URL:
+El acceso exterior se gestiona mediante un **Ingress NGINX** que enruta el tráfico según la ruta de la URL.
 
-```
-                        ┌────────────────────────────────────┐
-  Internet              │            Minikube                 │
-  ─────────────►        │                                     │
-  todo-app.local        │  ┌──────────────────────────────┐  │
-                        │  │         Ingress NGINX         │  │
-                        │  │                               │  │
-                        │  │  /api/*  ──►  todo-api:3000   │  │
-                        │  │  /*      ──►  todo-front:80   │  │
-                        │  └──────────────────────────────┘  │
-                        │          │              │           │
-                        │          ▼              ▼           │
-                        │  ┌─────────────┐ ┌───────────────┐ │
-                        │  │  todo-api   │ │  todo-front   │ │
-                        │  │ (Deployment)│ │  (Deployment) │ │
-                        │  │  ClusterIP  │ │   ClusterIP   │ │
-                        │  └─────────────┘ └───────────────┘ │
-                        └────────────────────────────────────┘
-```
 
 ## Pre-requisitos
 
@@ -60,6 +41,8 @@ minikube ip
 # Añadir al fichero de hosts (requiere sudo)
 echo "$(minikube ip) todo-app.local" | sudo tee -a /etc/hosts
 ```
+<img width="1441" height="317" alt="image" src="https://github.com/user-attachments/assets/4f8266c7-c351-4484-bdf8-5eb5b659c820" />
+
 
 En **Windows** el fichero está en `C:\Windows\System32\drivers\etc\hosts`.
 
