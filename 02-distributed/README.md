@@ -155,20 +155,7 @@ kubectl get all
 ```
 
 Salida esperada:
-```
-NAME                              READY   STATUS    RESTARTS   AGE
-pod/todo-api-7d9f6c8b5-nt3qw      1/1     Running   0          1m
-pod/todo-front-5c4b8d7a2-pz6kx    1/1     Running   0          1m
 
-NAME                         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
-service/kubernetes           ClusterIP   10.96.0.1       <none>        443/TCP    10m
-service/todo-api-service     ClusterIP   10.96.112.45    <none>        3000/TCP   1m
-service/todo-front-service   ClusterIP   10.96.88.210    <none>        80/TCP     1m
-
-NAME                         READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/todo-api     1/1     1            1           1m
-deployment.apps/todo-front   1/1     1            1           1m
-```
 <img width="1035" height="382" alt="image" src="https://github.com/user-attachments/assets/65efb46e-3b30-418e-91e0-6316b8e27ae5" />
 
 ### 2. Verificar el Ingress
