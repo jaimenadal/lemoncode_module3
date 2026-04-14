@@ -57,6 +57,8 @@ kubectl apply -f k8s/todo-front-service.yaml
 # Verificar
 kubectl get pods -l component=frontend
 ```
+<img width="1174" height="155" alt="image" src="https://github.com/user-attachments/assets/bcb70e94-0aa5-467f-bd3c-05f39bfe876a" />
+
 
 ### Paso 2 — todo-api
 
@@ -68,8 +70,9 @@ kubectl apply -f k8s/todo-api-service.yaml
 # Verificar
 kubectl get pods -l component=api
 ```
+<img width="1264" height="269" alt="image" src="https://github.com/user-attachments/assets/01024801-9ce2-49f0-bfd0-b221a5aaf222" />
 
-### Paso 3 — Ingress
+### Paso 3 — ingress
 
 ```bash
 kubectl apply -f k8s/ingress.yaml
@@ -77,6 +80,8 @@ kubectl apply -f k8s/ingress.yaml
 # Verificar que el Ingress tiene ADDRESS asignada
 kubectl get ingress todo-ingress
 ```
+<img width="1082" height="115" alt="image" src="https://github.com/user-attachments/assets/62763b14-fad1-428c-9cb7-99d50065fe15" />
+
 
 ### Despliegue en un solo comando
 
@@ -95,8 +100,12 @@ curl http://todo-app.local
 # API
 curl http://todo-app.local/api/
 ```
+<img width="1911" height="95" alt="image" src="https://github.com/user-attachments/assets/7f60f48f-fe48-4873-96da-51476e44e162" />
 
 O abrir en el navegador → **http://todo-app.local**
+
+<img width="1249" height="390" alt="image" src="https://github.com/user-attachments/assets/8949fda9-be46-47e5-917f-893aedf3c1b5" />
+
 
 ## 🔍 Cómo funciona el enrutado del Ingress
 
@@ -159,6 +168,7 @@ NAME                         READY   UP-TO-DATE   AVAILABLE   AGE
 deployment.apps/todo-api     1/1     1            1           1m
 deployment.apps/todo-front   1/1     1            1           1m
 ```
+<img width="1035" height="382" alt="image" src="https://github.com/user-attachments/assets/65efb46e-3b30-418e-91e0-6316b8e27ae5" />
 
 ### 2. Verificar el Ingress
 
@@ -167,10 +177,8 @@ kubectl get ingress todo-ingress
 ```
 
 Salida esperada:
-```
-NAME           CLASS   HOSTS            ADDRESS        PORTS   AGE
-todo-ingress   nginx   todo-app.local   192.168.49.2   80      1m
-```
+<img width="1054" height="73" alt="image" src="https://github.com/user-attachments/assets/8bf538f4-e242-4141-9aa0-8627a9a38dc8" />
+
 
 > La columna `ADDRESS` debe tener la IP de Minikube. Si aparece vacía, el addon de Ingress no está habilitado o aún está arrancando.
 
@@ -185,12 +193,15 @@ curl -s -o /dev/null -w "%{http_code}" http://todo-app.local
 curl -s http://todo-app.local/api/
 # Salida esperada: []
 ```
+<img width="1433" height="87" alt="image" src="https://github.com/user-attachments/assets/018341ee-3038-4c42-9853-8385a3f8986c" />
 
 ### 4. Verificar la UI en el navegador
 
 Abrir → **http://todo-app.local**
 
 Deberías ver la interfaz TODO con la lista vacía. Al crear un TODO, la UI llama a `/api/` que el Ingress redirige internamente al servicio `todo-api-service`.
+Creo un elemento llamado Kubernetes
+<img width="1383" height="609" alt="image" src="https://github.com/user-attachments/assets/3bdaaa4e-50df-4194-9054-91a3706e8b2f" />
 
 ### 5. Verificar el rewrite de rutas del Ingress
 
@@ -200,6 +211,7 @@ Deberías ver la interfaz TODO con la lista vacía. Al crear un TODO, la UI llam
 curl -sv http://todo-app.local/api/ 2>&1 | grep "< HTTP"
 # Salida esperada: < HTTP/1.1 200 OK
 ```
+<img width="1369" height="97" alt="image" src="https://github.com/user-attachments/assets/6f603a0e-9ce2-4438-83f2-3f5534ae4b06" />
 
 ### 6. Verificar logs en caso de error
 
