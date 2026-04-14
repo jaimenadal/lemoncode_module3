@@ -1,9 +1,9 @@
-# ── Etapa 1: Builder ──────────────────────────────────────────────────────────
+# Etapa 1: Builder
 FROM node:22-alpine AS builder
 
 WORKDIR /app
 
-# Copiar manifiestos de dependencias primero (mejor cache)
+# Copiar manifiestos de dependencias primero
 COPY todo-app/package*.json ./
 RUN npm ci --omit=dev
 
@@ -13,10 +13,10 @@ RUN cd frontend && npm ci
 # Copiar el resto del código fuente
 COPY todo-app/ ./
 
-# Build del frontend — webpack genera el output en frontend/dist
+# Build del frontend. webpack genera el output en frontend/dist
 RUN cd frontend && npm run build
 
-# ── Etapa 2: Runtime ──────────────────────────────────────────────────────────
+# Etapa 2: Runtime
 FROM node:22-alpine AS runtime
 
 WORKDIR /app
@@ -26,7 +26,7 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/src ./src
 
-# El frontend compilado va a /app/public — ruta que sirve express.static('public')
+# El frontend compilado va a /app/public. ruta que sirve express.static('public')
 COPY --from=builder /app/frontend/dist ./public
 
 # Variables de entorno con valores por defecto
