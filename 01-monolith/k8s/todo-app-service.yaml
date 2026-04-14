@@ -6,7 +6,6 @@ metadata:
     app: todo-app
     component: app
 spec:
-  
   type: LoadBalancer
   selector:
     app: todo-app
