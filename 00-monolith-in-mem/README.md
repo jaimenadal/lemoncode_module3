@@ -116,7 +116,6 @@ Salida esperada:
 curl -s http://192.168.49.2:31432/api/
 # Salida esperada: []
 ```
-<img width="1702" height="79" alt="Captura de pantalla de 2026-04-07 12-41-35" src="https://github.com/user-attachments/assets/deb2777b-450b-44b0-95b3-11214cadcb5a" />
 
 ### 3. Verificar que la UI es accesible
 
@@ -128,6 +127,7 @@ curl -s http://192.168.49.2:31432/api/
 ```bash
 # Crear un TODO
 <img width="1127" height="493" alt="Captura de pantalla de 2026-04-07 12-38-38" src="https://github.com/user-attachments/assets/16166a52-be7f-46d5-bc83-d183a9fa519e" />
+<img width="1702" height="79" alt="Captura de pantalla de 2026-04-07 12-41-35" src="https://github.com/user-attachments/assets/deb2777b-450b-44b0-95b3-11214cadcb5a" />
 
 # Eliminar el pod 
 kubectl delete pod -l app=todo-app-mem
