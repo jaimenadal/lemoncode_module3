@@ -2,28 +2,7 @@
 
 ## Descripción
 
-Misma aplicación TODO del ejercicio anterior, pero ahora la persistencia se delega en **PostgreSQL**. Se despliega como clúster Kubernetes con los siguientes recursos:
-
-```
-                   ┌─────────────────────────┐
-  Internet         │       Minikube           │
-  ─────────►       │                          │
- :3000             │  ┌──────────────────┐    │
-  LoadBalancer ────┼─►│   todo-app       │    │
-  Service          │  │   (Deployment)   │    │
-                   │  └────────┬─────────┘    │
-                   │           │ ClusterIP    │
-                   │           ▼              │
-                   │  ┌──────────────────┐    │
-                   │  │   postgres       │    │
-                   │  │   (StatefulSet)  │    │
-                   │  └────────┬─────────┘    │
-                   │           │              │
-                   │  ┌────────▼─────────┐    │
-                   │  │  PersistentVolume│    │
-                   │  └──────────────────┘    │
-                   └─────────────────────────┘
-```
+Misma aplicación TODO del ejercicio anterior, pero ahora la persistencia se delega en **PostgreSQL**.
 
 ## Pre-requisitos
 
@@ -35,26 +14,9 @@ Misma aplicación TODO del ejercicio anterior, pero ahora la persistencia se del
 minikube start
 ```
 
-## ⚠️ Importante — despliegue limpio
-
-Si ya has ejecutado este ejercicio anteriormente, el `PersistentVolume` puede contener datos residuales. En ese caso postgres omite la inicialización (`Skipping initialization`) y la base de datos queda vacía, lo que provoca el error `42P01: table does not exist` en la app.
-
-Antes de desplegar, asegúrate de partir de un estado limpio:
-
-```bash
-# Eliminar recursos previos si existen
-kubectl delete -f 00-monolith-in-mem/k8s/
-kubectl delete pv postgres-pv
-
-# Limpiar datos del hostPath en Minikube
-minikube ssh "sudo rm -rf /mnt/data/postgres"
-```
-
----
-
 ## 🚀 Despliegue paso a paso
 
-### Paso 1 — Capa de persistencia (PostgreSQL)
+### Paso 1 — capa de persistencia (PostgreSQL)
 
 ```bash
 # Orden importante: StorageClass → PV → PVC → Service → StatefulSet
@@ -70,11 +32,9 @@ kubectl get pods -l component=database -w
 ```
 <img width="1227" height="355" alt="image" src="https://github.com/user-attachments/assets/1ae552e0-db2a-4436-8367-f6c591eebdab" />
 
-### Paso 1b — Seed de la base de datos (Job)
+### Paso 1b — seed de la base de datos (job)
 
-La imagen `lemoncodersbc/lc-todo-monolith-psql:v5-2024` ejecuta el script de inicialización automáticamente solo cuando el directorio de datos está vacío. En Minikube con Docker driver, el PVC puede contener datos residuales del provisioner que hacen que postgres salte la inicialización (`Skipping initialization`).
-
-Para garantizar que la base de datos se inicializa correctamente en cualquier entorno, se usa un **Job de Kubernetes** que ejecuta el script SQL contra postgres usando un `ConfigMap` como volumen — tal como sugiere el propio enunciado del ejercicio:
+Para garantizar que la base de datos se inicializa correctamente en cualquier entorno, se usa un **Job de Kubernetes** que ejecuta el script SQL contra postgres usando un `ConfigMap` como volumen, tal como sugiere el propio enunciado del ejercicio:
 
 ```bash
 kubectl apply -f k8s/todos-db-configmap.yaml
@@ -116,44 +76,36 @@ kubectl get pods -l component=app -w
 ```
 <img width="1190" height="206" alt="image" src="https://github.com/user-attachments/assets/68b5cb0e-cf7d-46b9-8c96-c582176157e0" />
 
-### Paso 3 — Acceder desde fuera del clúster
+### Paso 3 — acceder desde fuera del clúster
 
-#### Opción A — `minikube service` (recomendado, funciona en todos los entornos)
+#### Obtener la URL `minikube service` (recomendado, funciona en todos los entornos)
 
 ```bash
 minikube service todo-app-service --url
 ```
-
-Devuelve la URL exacta, por ejemplo `http://192.168.49.2:31234`. Úsala en el navegador o con curl.
+<img width="1062" height="51" alt="image" src="https://github.com/user-attachments/assets/9b8b2cd6-11da-4b0d-9deb-2dc308ed2c88" />
 
 > ⚠️ En Linux con Docker driver, `minikube tunnel` **no crea rutas de red reales** hacia localhost.
 > Esta es la única opción fiable en Linux.
 
-#### Opción B — `kubectl port-forward` (acceso por localhost:3000)
+#### Alternativa al tunnel — `kubectl port-forward` (acceso por localhost:3000)
 
 ```bash
 kubectl port-forward service/todo-app-service 3000:3000
 ```
+<img width="1244" height="170" alt="image" src="https://github.com/user-attachments/assets/02ffa094-9924-414f-8c80-7b481f08614b" />
 
 Acceder a → **http://localhost:3000**
 
-Útil para desarrollo. Mantener el proceso abierto mientras se usa la app.
+Mantener el proceso abierto mientras se usa la app.
 
-#### Opción C — `minikube tunnel` (macOS/Windows únicamente)
 
-```bash
-# En una terminal separada (pedirá contraseña sudo)
-minikube tunnel
-```
-
-Con el tunnel activo, `EXTERNAL-IP` pasa de `<pending>` a `127.0.0.1` y se puede acceder a **http://localhost:3000**.
 
 ## 🗂️ Despliegue en un solo comando
 
 ```bash
 kubectl apply -f k8s/
 ```
-
 > ⚠️ El Job `todos-db-seed` se ejecuta automáticamente al hacer `kubectl apply -f k8s/` pero necesita que postgres esté Running primero. Si el Job falla, reintenta automáticamente hasta 5 veces (`backoffLimit: 5`).
 
 ## 🔄 Verificar estado general
@@ -233,38 +185,28 @@ persistentvolumeclaim/postgres-pvc   Bound    postgres-pv   1Gi        RWO      
 
 > El campo `STATUS` debe ser `Bound` en ambos. Si aparece `Pending`, revisar que el StorageClass y el PV están correctamente creados.
 
-### 3. Verificar que la API responde
-
-```bash
-curl -s http://$(minikube service todo-app-service --url | tail -1)/api/
-```
-
-Salida esperada:
-```json
-[]
-```
 
 ### 4. Verificar que la UI es accesible
+<img width="1467" height="576" alt="image" src="https://github.com/user-attachments/assets/f8737ad2-a018-4ed5-a021-a4ea0aa98f1c" />
 
-Abrir → **http://$(minikube service todo-app-service --url | tail -1)**
+### 5. Añadir nuevo campo en la aplicación
+<img width="1467" height="576" alt="image" src="https://github.com/user-attachments/assets/2989126f-b5c4-4cf2-b4a5-46c65b359a98" />
+
 
 ### 5. Verificar que los datos persisten tras reiniciar el pod
 
-```bash
-# Crear un TODO
-curl -s -X POST http://$(minikube service todo-app-service --url | tail -1)/api/ \
-  -H "Content-Type: application/json" \
-  -d '{"title": "Test persistencia con BBDD"}'
-
-# Eliminar el pod de la app (Kubernetes lo recreará automáticamente)
 kubectl delete pod -l component=app
+<img width="1049" height="48" alt="image" src="https://github.com/user-attachments/assets/db0a8c39-38d9-4634-9c21-55f70f0151a1" />
+
 
 # Esperar a que vuelva a estar Running
 kubectl get pods -l component=app -w
+<img width="1055" height="95" alt="image" src="https://github.com/user-attachments/assets/c436a0d7-8a59-464a-a273-68c671e477e1" />
+
 
 # Comprobar que el TODO sigue existiendo
-curl -s http://$(minikube service todo-app-service --url | tail -1)/api/
-# Salida esperada: [{"id":1,"title":"Test persistencia con BBDD","completed":false}]
+<img width="1352" height="597" alt="image" src="https://github.com/user-attachments/assets/c4af945a-3042-4f22-9d1d-acfef1096521" />
+
 ```
 
 ### 6. Verificar logs en caso de error
