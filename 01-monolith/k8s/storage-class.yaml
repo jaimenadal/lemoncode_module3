@@ -4,8 +4,6 @@ metadata:
   name: todo-storage-class
   labels:
     app: todo-app
-# Minikube incluye el provisioner 'k8s.io/minikube-hostpath' por defecto,
-# lo que permite aprovisionamiento dinámico sin configuración adicional.
 provisioner: k8s.io/minikube-hostpath
 reclaimPolicy: Retain       # el PV persiste aunque se elimine el PVC
 volumeBindingMode: Immediate
