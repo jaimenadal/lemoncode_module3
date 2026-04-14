@@ -208,7 +208,6 @@ kubectl get pods -l component=app -w
 # Comprobar que el TODO sigue existiendo
 <img width="1352" height="597" alt="image" src="https://github.com/user-attachments/assets/c4af945a-3042-4f22-9d1d-acfef1096521" />
 
-```
 
 ### 6. Verificar logs en caso de error
 
