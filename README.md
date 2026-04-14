@@ -48,8 +48,8 @@ Los tres ejercicios despliegan en Kubernetes (Minikube). El Ejercicio 1 incluye 
 
 | Ejercicio | Recursos K8s principales | Acceso externo |
 |-----------|--------------------------|----------------|
-| 00 — Monolito en memoria | Deployment + ConfigMap | LoadBalancer (`minikube tunnel`) |
-| 01 — Monolito con BBDD | Deployment + StatefulSet + PV/PVC + ConfigMap | LoadBalancer (`minikube tunnel`) |
+| 00 — Monolito en memoria | Deployment + ConfigMap | LoadBalancer |
+| 01 — Monolito con BBDD | Deployment + StatefulSet + PV/PVC + ConfigMap | LoadBalancer |
 | 02 — App Distribuida | 2× Deployment + ConfigMap | Ingress NGINX |
 
 ## 🚀 Inicio rápido
