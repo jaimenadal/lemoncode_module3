@@ -1,4 +1,4 @@
-# Ejercicio 3 — Aplicación Distribuida con Ingress (Kubernetes)
+# Ejercicio 3 — aplicación distribuida con ingress (Kubernetes)
 
 ## Descripción
 
