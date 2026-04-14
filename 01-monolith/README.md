@@ -190,10 +190,11 @@ persistentvolumeclaim/postgres-pvc   Bound    postgres-pv   1Gi        RWO      
 <img width="1467" height="576" alt="image" src="https://github.com/user-attachments/assets/f8737ad2-a018-4ed5-a021-a4ea0aa98f1c" />
 
 ### 5. Añadir nuevo campo en la aplicación
-<img width="1467" height="576" alt="image" src="https://github.com/user-attachments/assets/2989126f-b5c4-4cf2-b4a5-46c65b359a98" />
+<img width="1314" height="514" alt="image" src="https://github.com/user-attachments/assets/41494128-b120-4926-9b6f-e5a5af7bfcd7" />
 
 
-### 5. Verificar que los datos persisten tras reiniciar el pod
+
+### 6. Verificar que los datos persisten tras reiniciar el pod
 
 kubectl delete pod -l component=app
 <img width="1049" height="48" alt="image" src="https://github.com/user-attachments/assets/db0a8c39-38d9-4634-9c21-55f70f0151a1" />
