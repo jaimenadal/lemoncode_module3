@@ -6,8 +6,7 @@ metadata:
     app: todo-app
     component: app
 spec:
-  # LoadBalancer expone el Deployment fuera del clúster.
-  # Obtener la URL de acceso con: minikube service todo-app-service --url
+  
   type: LoadBalancer
   selector:
     app: todo-app
