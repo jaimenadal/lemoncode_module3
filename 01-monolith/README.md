@@ -43,7 +43,7 @@ Antes de desplegar, asegúrate de partir de un estado limpio:
 
 ```bash
 # Eliminar recursos previos si existen
-kubectl delete -f k8s/
+kubectl delete -f 00-monolith-in-mem/k8s/
 kubectl delete pv postgres-pv
 
 # Limpiar datos del hostPath en Minikube
