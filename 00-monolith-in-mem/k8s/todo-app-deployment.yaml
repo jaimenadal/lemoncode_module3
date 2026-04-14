@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: todo-app
-          # Imagen oficial de Lemoncode — persistencia en memoria (sin BBDD)
+          # Imagen oficial de Lemoncode
           image: lemoncodersbc/lc-todo-monolith:v5-2024
           ports:
             - containerPort: 3000
