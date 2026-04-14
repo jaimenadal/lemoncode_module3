@@ -124,7 +124,7 @@ curl -s http://192.168.49.2:31432/api/
 
 ### 4. Confirmar que los datos NO persisten (comportamiento esperado)
 
-```bash
+
 # Crear un TODO
 <img width="1127" height="493" alt="Captura de pantalla de 2026-04-07 12-38-38" src="https://github.com/user-attachments/assets/16166a52-be7f-46d5-bc83-d183a9fa519e" />
 <img width="1702" height="79" alt="Captura de pantalla de 2026-04-07 12-41-35" src="https://github.com/user-attachments/assets/deb2777b-450b-44b0-95b3-11214cadcb5a" />
@@ -142,7 +142,7 @@ kubectl get pods -l app=todo-app-mem -w
 <img width="1321" height="707" alt="Captura de pantalla de 2026-04-07 12-37-08" src="https://github.com/user-attachments/assets/fe33f930-d648-4729-973b-fd949d5152c4" />
 
 
-```
+
 
 ### 5. Logs en caso de error
 
