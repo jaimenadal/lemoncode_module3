@@ -1,4 +1,4 @@
-# Ejercicio 1 — Monolito en Memoria (Kubernetes)
+# Ejercicio 1 — Monolito en memoria (Kubernetes)
 
 ## Descripción
 
