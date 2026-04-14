@@ -68,6 +68,7 @@ kubectl apply -f k8s/postgres-statefulset.yaml
 # Verificar que el pod de postgres está Running
 kubectl get pods -l component=database -w
 ```
+<img width="1227" height="355" alt="image" src="https://github.com/user-attachments/assets/1ae552e0-db2a-4436-8367-f6c591eebdab" />
 
 ### Paso 1b — Seed de la base de datos (Job)
 
