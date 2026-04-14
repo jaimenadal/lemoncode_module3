@@ -96,6 +96,7 @@ SET
 ALTER TABLE
 Seed completado
 ```
+<img width="1158" height="491" alt="image" src="https://github.com/user-attachments/assets/2e6744c1-d0b4-4e64-b16a-0735194bdbe5" />
 
 Verificar que las tablas se crearon correctamente:
 
